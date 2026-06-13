@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NAEDOLLZ - Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===================== TYPO UNIFIÉE ===================== */
+
+button, .hero button, .category button{
+font-family: Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#4a0f14;
+}
+
+/* bouton explorer HOME */
+.hero button{
+border:1px solid #4a0f14;
+background:transparent;
+padding:10px 18px;
+cursor:pointer;
+transition:.3s;
+}
+
+.hero button:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+/* accordéon corrigé rouge */
+.acc-title{
+color:#4a0f14;
+}
+
+.acc-item.active .acc-title{
+color:#4a0f14;
+}
+
+/* éviter bleu mobile */
+button{
+-webkit-tap-highlight-color: transparent;
+}
+
+/* ===================== RESET ===================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Inter;
+background:#f5efea;
+color:#4a0f14;
+overflow-x:hidden;
+-webkit-text-size-adjust:100%;
+}
+
+/* background luxe */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:url("https://i.goopics.net/wir21c.png") center/cover no-repeat;
+opacity:.45;
+z-index:-1;
+}
+
+/* ===================== HEADER ===================== */
+
+header{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+width:min(1200px,92%);
+background:rgba(255,255,255,.6);
+backdrop-filter:blur(18px);
+border-radius:24px;
+padding:14px 20px;
+display:flex;
+justify-content:center;
+gap:20px;
+z-index:1000;
+border:1px solid rgba(255,255,255,.6);
+}
+
+header button{
+background:none;
+border:none;
+font-size:12px;
+letter-spacing:2px;
+text-transform:uppercase;
+cursor:pointer;
+color:#4a0f14;
+}
+
+/* ===================== PAGES ===================== */
+
+.page{
+display:none;
+min-height:100vh;
+padding:140px 20px 60px;
+}
+
+.page.active{
+display:block;
+animation:fade .6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:none;}
+}
+
+/* ===================== HOME ===================== */
+
+.hero{
+min-height:70vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-family:"Cormorant Garamond";
+font-size:clamp(60px,10vw,160px);
+letter-spacing:10px;
+}
+
+.hero p{
+font-size:13px;
+letter-spacing:2px;
+opacity:.7;
+}
+
+.hero button{
+margin-top:20px;
+padding:10px 18px;
+border:1px solid #4a0f14;
+background:none;
+cursor:pointer;
+}
+
+/* ===================== MAGAZINE ===================== */
+
+.magazine-container{
+max-width:1000px;
+margin:auto;
+}
+
+/* accordion */
+.acc-item{
+background:rgba(255,255,255,.7);
+border-radius:16px;
+margin-bottom:12px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.6);
+}
+
+.acc-title{
+padding:18px;
+background:none;
+border:none;
+width:100%;
+text-align:left;
+cursor:pointer;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.acc-content{
+max-height:0;
+overflow:hidden;
+transition:.4s ease;
+padding:0 18px;
+}
+
+.acc-content p{
+font-family: "Palatino Linotype", "Palatino", serif;
+font-size: 14px;
+line-height: 1.6;
+letter-spacing: 0.5px;
+}
+
+.acc-item.active .acc-content{
+max-height:800px;
+padding:18px;
+}
+
+/* ===================== SHOWCASE ===================== */
+
+.showcase-container{
+width:min(420px,90vw);
+max-width:100%;
+aspect-ratio:3/5;
+margin:auto;
+overflow:hidden;
+position:relative;
+border:4px solid #4a0f14;
+border-radius:18px;
+background:#f7efe8;
+}
+
+.showcase-container{
+  position:relative;
+  overflow:hidden;
+}
+
+.showcase-slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+
+  opacity:0;
+  transition:opacity 1.2s ease;
+  will-change: opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.showcase-slide.active{
+  opacity:1;
+}
+
+/* controls */
+.showcase-controls{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 10px;
+pointer-events:none;
+}
+
+.showcase-controls button{
+pointer-events:auto;
+background:rgba(255,255,255,.6);
+border:1px solid #4a0f14;
+padding:8px 10px;
+cursor:pointer;
+}
+
+/* ===================== CABINE ===================== */
+
+#cabine-layout{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+}
+
+#avatar-column{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+#avatar-box{
+width:min(420px,90vw);
+aspect-ratio:2/3;
+border:4px solid #4a0f14;
+border-radius:18px;
+overflow:hidden;
+position:relative;
+background:#f5efea;
+
+transition:
+opacity .35s ease,
+transform .35s ease;
+}
+
+#avatar-box img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:contain;
+opacity:1;
+transition: opacity .6s ease; /* 👈 plus doux et stable */
+}
+
+#menu-content{
+width:min(320px,90vw);
+background:rgba(255,255,255,.7);
+backdrop-filter:blur(10px);
+padding:16px;
+border-radius:14px;
+border:1px solid rgba(0,0,0,.1);
+}
+
+.category{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid rgba(0,0,0,.08);
+align-items:center;
+}
+
+.category strong{
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+font-size:12px;
+}
+
+.cat-controls{
+display:flex;
+gap:6px;
+align-items:center;
+}
+
+.cat-controls button{
+border:1px solid #4a0f14;
+background:transparent;
+color:#4a0f14;
+width:26px;
+height:26px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.2s;
+font-size:14px;
+}
+
+.cat-controls button:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+#reset-avatar{
+margin-top:12px;
+width:100%;
+
+border:1px solid #4a0f14;
+background:transparent;
+
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+
+color:#4a0f14;
+cursor:pointer;
+transition:.3s;
+
+padding:12px;
+
+/* 👇 effet “panel luxe” comme les autres blocs */
+background:rgba(255,255,255,.7);
+backdrop-filter:blur(10px);
+border-radius:0px;
+}
+
+#reset-avatar:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+
+/* ===================== PANIER ===================== */
+
+#cart{
+max-width:800px;
+margin:auto;
+background:rgba(255,255,255,.7);
+padding:20px;
+border-radius:14px;
+}
+
+.cart-item{
+padding:10px;
+border-bottom:1px solid rgba(0,0,0,.1);
+}
+
+#product-panel{
+width:min(420px,90vw);
+margin-top:12px;
+padding:14px;
+
+/* 🧊 verre givré intact */
+background:rgba(255,255,255,.65);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+/* 💎 bordure lisible */
+border:1px solid rgba(74,15,20,0.85);
+
+/* ✨ profondeur luxe */
+box-shadow:
+0 10px 30px rgba(0,0,0,0.06),
+0 0 0 1px rgba(255,255,255,0.35) inset;
+
+border-radius:14px;
+}
+
+
+
+
+#product-name{
+  font-family: "Cormorant Garamond", serif;
+font-size:20px;
+}
+
+
+#product-desc{
+  font-family: "Palatino", serif;
+font-size:13px;
+opacity:.8;
+margin-top:6px;
+}
+
+#product-price{
+font-family:"Cormorant Garamond", serif;
+font-size:18px;
+font-weight:600;
+}
+
+#color-picker{
+display:flex;
+gap:8px;
+margin-top:10px;
+}
+
+.swatch{
+width:25px;
+height:25px;
+border-radius:50%;
+border:1px solid #4a0f14;
+cursor:pointer;
+}
+
+.lux-btn{
+width:100%;
+padding:12px;
+margin-top:10px;
+
+border:1px solid #4a0f14;
+background:transparent;
+
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#4a0f14;
+
+cursor:pointer;
+transition:.3s;
+}
+
+.lux-btn:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+.category strong{
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+font-size:12px;
+}
+
+.category button{
+border:1px solid #4a0f14;
+background:transparent;
+padding:8px 14px;
+cursor:pointer;
+transition:.3s;
+
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#4a0f14;
+}
+
+.category button:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+#validate-cart{
+width:100%;
+padding:12px;
+
+border:1px solid #4a0f14;
+background:transparent;
+
+font-family:Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+
+cursor:pointer;
+transition:.3s;
+color:#4a0f14;
+}
+
+#validate-cart:hover{
+background:#4a0f14;
+color:#f5efea;
+}
+
+#cart-count{
+position:absolute;
+top:-6px;
+right:-10px;
+background:#4a0f14;
+color:white;
+font-size:11px;
+width:18px;
+height:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+opacity:0;
+transform:scale(0.6);
+transition:0.2s ease;
+pointer-events:none;
+}
+
+#cart-count.active{
+opacity:1;
+transform:scale(1);
+}
+
+#cart-count.pop{
+animation: pop 0.25s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(0.6);}
+50%{transform:scale(1.4);}
+100%{transform:scale(1);}
+}
+
+#cart-total{
+margin-top:20px;
+
+font-family:"Cormorant Garamond";
+font-size:18px;
+font-weight:600;
+text-align:right;
+}
+
+
+#gender-switch{
+display:flex;
+gap:10px;
+width:min(420px,90vw);
+margin-bottom:14px;
+}
+
+#gender-switch .lux-btn{
+margin-top:0;
+flex:1;
+}
+
+.active-gender{
+background:#4a0f14 !important;
+color:#f5efea !important;
+}
+
+#avatar-box{
+transition:opacity .25s ease;
+}
+
+#avatar-arrows{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 10px;
+
+opacity:0;
+pointer-events:none;
+
+transition:.25s ease;
+
+z-index:50; /* 🔥 CRUCIAL */
+}
+
+#avatar-arrows.active{
+opacity:1;
+pointer-events:auto;
+}
+
+#avatar-arrows button{
+pointer-events:auto;
+
+background:rgba(255,255,255,.65);
+border:1px solid #4a0f14;
+
+padding:10px 12px;
+border-radius:0px;
+
+cursor:pointer;
+transition:.2s ease;
+
+font-size:16px;
+line-height:1;
+
+backdrop-filter: blur(10px);
+}
+
+#avatar-arrows button:hover{
+background:#4a0f14;
+color:#f5efea;
+transform: scale(1.05);
+}
+
+#avatar-name-box p{
+font-family: Inter;
+letter-spacing:2px;
+text-transform:uppercase;
+font-size:12px;
+}
+
+.hero p{
+font-family: Inter, sans-serif;
+font-size:8px;
+letter-spacing:2px;
+text-transform: uppercase;
+opacity:.7;
+}
+
+
+.cart-name{
+font-family:"Cormorant Garamond", serif;
+font-size:22px;
+font-weight:700;
+}
+
+.cart-meta{
+font-family:Inter, sans-serif;
+font-size:12px;
+opacity:.65;
+letter-spacing:1px;
+margin-top:2px;
+text-transform:uppercase;
+}
+
+.cart-price{
+font-family:"Cormorant Garamond", serif;
+font-size:16px;
+margin-top:8px;
+font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+<button onclick="showPage('home')">Accueil</button>
+<button onclick="showPage('magazine')">Magazine</button>
+<button onclick="showPage('cabine')">Cabine</button>
+<button onclick="showPage('panier')">
+Panier
+<span id="cart-count"></span>
+</button>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+<div class="hero">
+<h1>NAEDOLLZ</h1>
+<p>Coiffeuse • Styliste • Chirurgienne • Esthéticienne</p>
+<button onclick="showPage('magazine')">Découvrez la collection</button>
+</div>
+</section>
+
+
+<!-- MAGAZINE -->
+<section id="magazine" class="page">
+
+<div class="magazine-container">
+
+<div class="acc-item">
+<button class="acc-title">Editorial</button>
+<div class="acc-content">
+    <p>Bienvenue dans l’univers <strong>NAEDOLLZ</strong>✨<br><br>
+
+Ici, vous trouverez plusieurs services pour vous embellir et vous relooker. <strong>Coiffures, visages, vêtements, tatouages, maquillages, bijoux... </strong>
+Pour vous accueillir au mieux, j’ai mis en place une <strong>cabine d’essayage interactive</strong>. Ainsi, vous pourrez voir l’ensemble de ce que je propose, les associations que vous souhaitez faire, et le rendu en réel sur un Pol ou une Polette, avec toutes les carnations et choix possibles afin de <strong>faciliter votre demande en salon.</strong><br><br>
+
+Pour informations, tout les éléments qui composent un visage ne sont pas toujours harmonieux ensemble, c’est pour cela que chaque éléments qui composent un modèle (visage, coiffure et tenues) porte un <strong>même prénom.</strong> Vous pouvez également visualiser directement les modèles dans <strong>le menu déroulant Showroom</strong> ci-dessous. 
+Dans le menu déroulant <strong>L'équipe</strong>, vous trouverez la marche à suivre pour vos demandes.<br><br>
+
+Pour passer vos commandes de vêtements, direction <strong>la cabine d'essayage !</strong><br><br>
+
+En espérant vous voir bientôt, Nae. 
+</p>
+  </div>
+</div>
+
+<div class="acc-item">
+<button class="acc-title">L’équipe</button>
+<div class="acc-content">
+<p><strong>Pour vos demandes :</strong><br><br>
+
+- Toutes les demandes de <strong>coiffures : chez Nae ZNS</strong><br>
+
+- <strong>Yeux, nez, bouches, ombres visage</strong> (blush, tâches de rousseurs etc = cicatrices) : <strong>Nae Lenz</strong><br>
+
+- <strong>Sourcils,</strong> ongles, bijoux et maquillage : <strong>Lenz NXI</strong><br>
+
+- Pour les <strong>vêtements</strong> : Validez votre panier <strong>sur le site</strong> et vous recevrez vos articles via livraison <strong>une fois le paiement du total envoyé via virement à Nae Lenz</strong>
+</p>
+   <img
+  src="https://i.goopics.net/1ci1qc.jpg"
+  style="
+    width:100%;
+    height:auto;
+    display:block;
+    margin-top:10px;
+  "
+>
+</div>
+</div>
+
+<div class="acc-item">
+<button class="acc-title">Showroom</button>
+<div class="acc-content">
+
+<div class="showcase-container">
+<img class="showcase-slide active" id="s0">
+<img class="showcase-slide" id="s1">
+
+<div class="showcase-controls">
+<button onclick="prev()">‹</button>
+<button onclick="next()">›</button>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- CABINE -->
+<section id="cabine" class="page">
+
+<div id="cabine-layout">
+
+<div id="avatar-column">
+
+
+<div id="gender-switch">
+    <button class="lux-btn active-gender" onclick="changeGender('femme')">
+        Femme
+    </button>
+
+    <button class="lux-btn" onclick="changeGender('homme')">
+        Homme
+    </button>
+</div>
+  <div id="avatar-box">
+    <img id="avatar">
+
+    <div id="avatar-arrows">
+      <button onclick="avatarPrev()">‹</button>
+      <button onclick="avatarNext()">›</button>
+    </div>
+  </div>
+<div id="product-panel">
+<h3 id="product-name"></h3>
+<p id="product-desc"></p>
+<p id="product-price"></p>
+
+<div id="color-picker"></div>
+
+<button id="add-to-cart" class="lux-btn">
+Ajouter au panier
+</button>
+</div>
+
+</div>
+
+<div id="menu-content"></div>
+
+<button id="reset-avatar" class="lux-btn">
+Réinitialiser
+</button>
+
+</div>
+
+
+
+</div>
+
+</section>
+
+<!-- PANIER -->
+<section id="panier" class="page">
+<div id="cart">
+
+<h2 style="font-family:Cormorant Garamond;">PANIER</h2>
+
+<div id="cart-items"></div>
+
+<div id="cart-total"></div>
+
+<div id="avatar-name-box">
+
+<p style="
+margin-top:20px;
+margin-bottom:8px;
+font-size:13px;
+font-family:Inter;
+">
+Nom de votre Pol(ette) *
+</p>
+
+<input
+id="avatar-name"
+type="text"
+placeholder="Ex : Alycia Smith"
+style="
+width:100%;
+padding:12px;
+border:1px solid #4a0f14;
+background:rgba(255,255,255,.7);
+font-family:Inter;
+color:#4a0f14;
+outline:none;
+">
+
+</div>
+
+</div>
+
+<button id="validate-cart" class="hero-btn" style="margin-top:20px;">
+Valider le panier
+</button>
+
+</div>
+</section>
+
+<script>
+let currentItem = null;
+let currentCategory = null;
+let selectedCartImage = null;
+let cart = [];
+let activeCategory = null;
+let layerToken = {};
+
+
+const noCartCategories = ["yeux","peau","tatouages","cicatrices","muscles","sourcils","maquillage","nez","bouche","cheveux","Pilosité faciale"];
+
+/* ===================== NAV ===================== */
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* ===================== SHOWCASE ===================== */
+let i = 0;
+
+const imgs = [
+  "https://i.goopics.net/il9yh3.png",
+  "https://i.goopics.net/d758r4.png",
+  "https://i.goopics.net/tfu1sl.png",
+"https://i.goopics.net/zbb88w.png",
+"https://i.goopics.net/k6feso.png",
+"https://i.goopics.net/mlr6kb.png",
+"https://i.goopics.net/ey12sf.png",
+"https://i.goopics.net/04rxu5.png",
+"https://i.goopics.net/hugow6.png",
+"https://i.goopics.net/52oj19.png",
+"https://i.goopics.net/0peqcv.png",
+];
+
+imgs.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
+const slides = [
+  document.getElementById("s0"),
+  document.getElementById("s1")
+];
+
+slides[0].src = imgs[0];
+slides[0].classList.add("active");
+
+function show(n){
+
+  const nextSlide = slides.find(s => !s.classList.contains("active"));
+  const current = slides.find(s => s.classList.contains("active"));
+
+  const img = new Image();
+  img.src = imgs[n];
+
+  img.onload = () => {
+
+    nextSlide.src = imgs[n];
+
+    requestAnimationFrame(() => {
+      nextSlide.classList.add("active");
+      current.classList.remove("active");
+    });
+
+  };
+}
+
+function next(){
+  i = (i + 1) % imgs.length;
+  show(i);
+}
+
+function prev(){
+  i = (i - 1 + imgs.length) % imgs.length;
+  show(i);
+}
+
+setInterval(next, 4000);
+
+/* ===================== ACCORDÉONS ===================== */
+document.querySelectorAll(".acc-title").forEach(btn=>{
+btn.addEventListener("click", ()=>{
+btn.parentElement.classList.toggle("active");
+});
+});
+
+/* ===================== CABINE ===================== */
+let gender = "femme";
+
+const femaleCats = {
+
+  "peau": [
+    {name: "Peau 1", src: "https://i.goopics.net/4u59dg.png"},
+    {name: "Peau 2", src: "https://i.goopics.net/13ruau.png"},
+    {name: "Peau 3", src: "https://i.goopics.net/q8474g.png"},
+    {name: "Peau 4", src: "https://i.goopics.net/bfmcwi.png"},
+    {name: "Peau 5", src: "https://i.goopics.net/jdqx1p.png"},
+    {name: "Peau 6", src: "https://i.goopics.net/fl8cbu.png"},
+    {name: "Peau 7", src: "https://i.goopics.net/py58uk.png"},
+    {name: "Peau 8", src: "https://i.goopics.net/wfoiqt.png"},
+    {name: "Peau 9", src: "https://i.goopics.net/tvxo9r.png"},
+    {name: "Peau 10", src: "https://i.goopics.net/jjgyi7.png"},
+    {name: "Peau 11", src: "https://i.goopics.net/d4cgdz.png"},
+    {name: "Peau 12", src: "https://i.goopics.net/f3worr.png"},
+    {name: "Peau 13", src: "https://i.goopics.net/y7ee3o.png"},
+    {name: "Peau 14", src: "https://i.goopics.net/lmuw54.png"},
+    {name: "Peau 15", src: "https://i.goopics.net/nazn1e.png"},
+    {name: "Peau 16", src: "https://i.goopics.net/lc7yzn.png"},
+    {name: "Peau 17", src: "https://i.goopics.net/nv5pjw.png"},
+    {name: "Peau 18", src: "https://i.goopics.net/dwkgr8.png"},
+    {name: "Peau 19", src: "https://i.goopics.net/eiyue7.png"}
+],
+
+
+"tatouages": [
+{
+name: "Tatouage ninja", src: "https://i.goopics.net/p1onnx.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage croix", src: "https://i.goopics.net/5pin40.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage rose", src: "https://i.goopics.net/t1r0vp.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage papillons", src: "https://i.goopics.net/4s8gdo.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage butterfly", src: "https://i.goopics.net/l9cl4n.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage heavenly", src: "https://i.goopics.net/nauat2.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+],
+
+
+  "cicatrices": [
+    {name: "Ombres visage", src: "https://i.goopics.net/r32xro.png"},
+    {name: "Ombres + grains de beauté", src: "https://i.goopics.net/fii7nw.png"},
+    {name: "Ombres + grains de beauté 2", src: "https://i.goopics.net/neygtt.png"},
+    {name: "Ombres + tâches de rousseurs", src: "https://i.goopics.net/j6vk9d.png"},
+    {name: "Ombres + grains de beauté 3", src: "https://i.goopics.net/rl2wl5.png"},
+    {name: "Ombres + blush)", src: "https://i.goopics.net/7nxoms.png"},
+    {name: "Ombres + sunburn)", src: "https://i.goopics.net/mxna0v.png"},
+    {name: "Pommettes)", src: "https://i.goopics.net/1pw9hj.png"},
+],
+
+
+
+  "muscles": [
+    {name: "Decolleté light skin", src: "https://i.goopics.net/6p7af2.png"},
+    {name: "Decolleté dark skin", src: "https://i.goopics.net/sx657f.png"},
+],
+
+  "sourcils": [
+    {name: "Sourcils Leena", src: "https://i.goopics.net/frcqlv.png"},
+    {name: "Sourcils Shaaz", src: "https://i.goopics.net/4cey2h.png"},
+    {name: "Sourcils Jenna", src: "https://i.goopics.net/j9wqz4.png"},
+    {name: "Sourcils Fayra", src: "https://i.goopics.net/quwd55.png"},
+    {name: "Sourcils Jazmin", src: "https://i.goopics.net/q4dssx.png"},
+    {name: "Sourcils Elaz", src: "https://i.goopics.net/jjjn99.png"},
+    {name: "Sourcils Venix", src: "https://i.goopics.net/o4oqta.png"},
+    {name: "Sourcils Sola", src: "https://i.goopics.net/s6lj0z.png"},
+    {name: "Sourcils Taysha", src: "https://i.goopics.net/l518ol.png"},
+    {name: "Sourcils Kiki", src: "https://i.goopics.net/3tacio.png"},
+    {name: "Sourcils Alycia", src: "https://i.goopics.net/hiwo87.png"},
+],
+
+
+  "maquillage": [
+{
+name: "Fard à paupière Jenna", 
+src: "https://i.goopics.net/xev805.png",
+description:"Adapté uniquement pour les yeux Jenna.",
+colors:[
+{color:"#BDCED5", src:"https://i.goopics.net/xev805.png"},
+]
+},
+{
+name: "Fard à paupière Venix", 
+src: "https://i.goopics.net/8rb6u2.png",
+description:"Adapté uniquement pour les yeux Venix.",
+colors:[
+{color:"#ff84a8", src:"https://i.goopics.net/8rb6u2.png"},
+{color:"#ff935e", src:"https://i.goopics.net/pegaky.png"},
+]
+},
+],
+
+
+"yeux":[
+{
+name:"Yeux Leena",
+src:"https://i.goopics.net/wbs3yg.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#684231", src:"https://i.goopics.net/wbs3yg.png"},
+]
+},
+{
+name:"Yeux Shaaz",
+src:"https://i.goopics.net/kthsny.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#684231", src:"https://i.goopics.net/kthsny.png"},
+]
+},
+{
+name:"Yeux Jenna",
+src:"https://i.goopics.net/abb605.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#684231", src:"https://i.goopics.net/abb605.png"},
+]
+},
+{
+name:"Yeux Fayra",
+src:"https://i.goopics.net/av60sy.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#684231", src:"https://i.goopics.net/av60sy.png"},
+]
+},
+{
+name:"Yeux Jazmin",
+src:"https://i.goopics.net/r1xpd5.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{colorImg:"https://i.goopics.net/npkfyo.png", src:"https://i.goopics.net/r1xpd5.png"},
+]
+},
+{
+name:"Yeux Elaz",
+src:"https://i.goopics.net/e7hqrv.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#6f6353", src:"https://i.goopics.net/e7hqrv.png"},
+]
+},
+{
+name:"Yeux Venix",
+src:"https://i.goopics.net/xqiijh.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#4c767f", src:"https://i.goopics.net/xqiijh.png"},
+]
+},
+{
+name:"Yeux Sola",
+src:"https://i.goopics.net/yseujv.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#4c767f", src:"https://i.goopics.net/yseujv.png"},
+{color:"#442d28", src:"https://i.goopics.net/zk93ht.png"},
+]
+},
+{
+name:"Yeux Taysha",
+src:"https://i.goopics.net/us59b1.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#946d64", src:"https://i.goopics.net/us59b1.png"},
+]
+},
+{
+name:"Yeux Kiki",
+src:"https://i.goopics.net/o6stdd.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#a4a9ad", src:"https://i.goopics.net/o6stdd.png"},
+]
+},
+{
+name:"Yeux Alycia",
+src:"https://i.goopics.net/mwftb4.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#858552", src:"https://i.goopics.net/mwftb4.png"},
+]
+},
+],
+
+
+"nez":[
+{
+name:"Nez Leena",
+src:"https://i.goopics.net/tpaa5t.png",
+description:"Light ou dark selon votre carnation. Piercing nez offert, à précisez lors de votre demande.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/tpaa5t.png"},
+{color:"#201412", src:"https://i.goopics.net/nwca9b.png"},
+]
+},
+{
+name:"Nez Shaaz",
+src:"https://i.goopics.net/a54erk.png",
+description:"Light ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/a54erk.png"},
+{color:"#201412", src:"https://i.goopics.net/nloehw.png"}
+]
+},
+{
+name:"Nez Jenna",
+src:"https://i.goopics.net/s9vly1.png",
+description:"Light-médium ou dark selon votre carnation. Piercing nez offert, à précisez lors de votre demande.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/s9vly1.png"},
+{color:"#201412", src:"https://i.goopics.net/obu4h5.png"}
+]
+},
+{
+name:"Nez Fayra",
+src:"https://i.goopics.net/gfsng9.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/gfsng9.png"},
+{color:"#201412", src:"https://i.goopics.net/6q9sd2.png"}
+]
+},
+{
+name:"Nez Elaz",
+src:"https://i.goopics.net/7jr80c.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/7jr80c.png"},
+{color:"#201412", src:"https://i.goopics.net/34pv7h.png"}
+]
+},
+{
+name:"Nez Venix",
+src:"https://i.goopics.net/arxdk9.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/arxdk9.png"},
+{color:"#201412", src:"https://i.goopics.net/t2nxeg.png"}
+]
+},
+{
+name:"Nez Sola",
+src:"https://i.goopics.net/may47l.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/may47l.png"},
+{color:"#201412", src:"https://i.goopics.net/qbqm0g.png"}
+]
+},
+{
+name:"Nez Taysha",
+src:"https://i.goopics.net/cgjkcu.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/cgjkcu.png"},
+{color:"#201412", src:"https://i.goopics.net/tqs891.png"}
+]
+},
+{
+name:"Nez Kiki",
+src:"https://i.goopics.net/4ltchd.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/4ltchd.png"},
+{color:"#201412", src:"https://i.goopics.net/zv25ow.png"}
+]
+},
+{
+name:"Nez Alycia",
+src:"https://i.goopics.net/go29h0.png",
+description:"Light-médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/go29h0.png"},
+{color:"#201412", src:"https://i.goopics.net/6eqofm.png"}
+]
+},
+],
+
+
+
+  "bouche": [
+    {name: "Bouche Leena", src: "https://i.goopics.net/2s9dpk.png"},
+    {name: "Bouche Shaaz", src: "https://i.goopics.net/1q11uc.png"},
+    {name: "Bouche Jenna", src: "https://i.goopics.net/1enrsf.png"},
+    {name: "Bouche Fayra", src: "https://i.goopics.net/e792us.png"},
+    {name: "Bouche Jazmin", src: "https://i.goopics.net/h9xgcl.png"},
+{
+name: "Bouche Venix", 
+src: "https://i.goopics.net/yj5ags.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#a24e55", src:"https://i.goopics.net/yj5ags.png"},
+{color:"#ad664a", src:"https://i.goopics.net/xz1pyx.png"},
+]
+},
+    {name: "Bouche Sola", src: "https://i.goopics.net/wfdwxu.png"},
+    {name: "Bouche Taysha", src: "https://i.goopics.net/grc238.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#ad5845", src:"https://i.goopics.net/grc238.png"},
+{color:"#a14954", src:"https://i.goopics.net/q8ib7a.png"},
+]
+},
+    {name: "Bouche Kiki", src: "https://i.goopics.net/1e1vw2.png"},
+    {name: "Bouche Alycia", src: "https://i.goopics.net/yigawu.png"},
+],
+
+
+"cheveux":[
+{
+name:"Leena",
+src:"https://i.goopics.net/lwhvry.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/lwhvry.png"},
+]
+},
+{
+name:"Shaaz",
+src:"https://i.goopics.net/ts19si.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#4E3A31", src:"https://i.goopics.net/lwhvry.png"},
+]
+},
+{
+name:"Jenna",
+src:"https://i.goopics.net/nh93wi.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#3D2725", src:"https://i.goopics.net/nh93wi.png"},
+]
+},
+{
+name:"Fayra",
+src:"https://i.goopics.net/vjsr86.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/vjsr86.png"},
+]
+},
+{
+name:"Jazmin",
+src:"https://i.goopics.net/boeg8q.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/boeg8q.png"},
+]
+},
+{
+name:"Elaz",
+src:"https://i.goopics.net/js9gme.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#6A4C3E", src:"https://i.goopics.net/js9gme.png"},
+]
+},
+{
+name:"Venix",
+src:"https://i.goopics.net/6olrnc.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#5c3f44", src:"https://i.goopics.net/6olrnc.png"},
+]
+},
+{
+name:"Taysha",
+src:"https://i.goopics.net/c1mkm3.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/c1mkm3.png"},
+]
+},
+{
+name:"Kiki",
+src:"https://i.goopics.net/8213od.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#886654", src:"https://i.goopics.net/8213od.png"},
+{color:"#DEC3a8", src:"https://i.goopics.net/65qm3b.png"},
+{color:"#000000", src:"https://i.goopics.net/9cf5hc.png"},
+]
+},
+{
+name:"Alycia",
+src:"https://i.goopics.net/a8ss3c.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#Caab94", src:"https://i.goopics.net/a8ss3c.png"},
+]
+},
+],
+
+
+"Collant/S.Vêtement":[
+{
+name:"Sous vêtements Leena",
+src:"https://i.goopics.net/52iotm.png",
+price: 50,
+description:"À porter avec le Jean Leena.",
+colors:[
+{color:"#CF7AB5", src:"https://i.goopics.net/f919jt.png"},
+]
+},
+{
+name:"Collants Shaaz",
+src:"https://i.goopics.net/1dx3c8.png",
+price: 50,
+description:"Collants à motif, noir ou blanc.",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/1dx3c8.png"},
+{color:"#ffffff", src:"https://i.goopics.net/go9jtp.png"},
+]
+},
+{
+name:"Sous vêtements Shaaz",
+price: 50,
+src:"https://i.goopics.net/q7cw3b.png",
+description:"À porter avec les robes Shaaz.",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/q7cw3b.png"},
+]
+},
+{
+name:"Sous vêtements Fayra",
+price: 50,
+src:"https://i.goopics.net/nkfgx8.png",
+description:"À porter avec le top Fayra.",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/nkfgx8.png"},
+]
+},
+{
+name:"Sous vêtements Venix",
+price: 50,
+src:"https://i.goopics.net/gq8ye7.png",
+description:"À porter avec le body Venix.",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/gq8ye7.png"},
+]
+},
+],
+
+
+"Chaussures":[
+{
+name:"Baskets Leena",
+price: 200,
+src:"https://i.goopics.net/gwfx89.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#ACA89E", src:"https://i.goopics.net/zn6dv7.png"},
+]
+},
+{
+name:"Talons Shaaz",
+src:"https://i.goopics.net/t6ev98.png",
+price: 100,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#ffffff", src:"https://i.goopics.net/t6ev98.png"},
+{color:"#000000", src:"https://i.goopics.net/kz5ga1.png"},
+]
+},
+{
+name:"Bottes Sola",
+src:"https://i.goopics.net/212yfi.png",
+price: 150,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#690c13", src:"https://i.goopics.net/212yfi.png"},
+]
+},
+{
+name:"Cuissarde Alycia",
+src:"https://i.goopics.net/bi1ipn.png",
+price: 150,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#EBAFD2", src:"https://i.goopics.net/bi1ipn.png"},
+{color:"#265b45", src:"https://i.goopics.net/xvrqrt.png"},
+]
+},
+],
+
+
+"tops":[
+{
+name:"Top Leena",
+src:"https://i.goopics.net/jsj1ua.png",
+price: 200,
+description:"À porter avec les sous vêtements Leena. Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#38120E", src:"https://i.goopics.net/jsj1ua.png"},
+{color:"#142048", src:"https://i.goopics.net/bhh930.png"},
+]
+},
+{
+name:"Corset Jenna",
+src:"https://i.goopics.net/wwfgng.png",
+price: 150,
+description:"Catégorie sous vêtements.",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/llt1n7.png"},
+]
+},
+{
+name:"Top Fayra",
+src:"https://i.goopics.net/2mtbmo.png",
+price: 200,
+description:"À porter avec les sous vêtements Fayra.",
+colors:[
+{colorImg:"https://i.goopics.net/fwt9t7.png", src:"https://i.goopics.net/2mtbmo.png"},
+]
+},
+{
+name:"Maillot Jazmin",
+src:"https://i.goopics.net/9eqquf.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{colorImg:"https://i.goopics.net/oc14o4.png", src:"https://i.goopics.net/9eqquf.png"},
+]
+},
+{
+name:"Gilet Elaz",
+src:"https://i.goopics.net/qew8xz.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#171f4f", src:"https://i.goopics.net/qew8xz.png"},
+{color:"#4e0f16", src:"https://i.goopics.net/8f0jdu.png"},
+{color:"#004035", src:"https://i.goopics.net/d8pf5m.png"},
+{color:"#000000", src:"https://i.goopics.net/zemxqm.png"},
+]
+},
+{
+name:"Body Venix",
+src:"https://i.goopics.net/2wte5x.png",
+price: 200,
+description:"À porter avec les sous-vêtements Venix. Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#810b37", src:"https://i.goopics.net/clljt5.png"},
+]
+},
+{
+name:"Top Sola",
+src:"https://i.goopics.net/pkals9.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#690c13", src:"https://i.goopics.net/pkals9.png"},
+]
+},
+{
+name:"Top Sola 2",
+src:"https://i.goopics.net/xo765z.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#690c13", src:"https://i.goopics.net/xo765z.png"},
+]
+},
+{
+name:"Blouse",
+src:"https://i.goopics.net/kg6eqd.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#f9ebdd", src:"https://i.goopics.net/kg6eqd.png"},
+]
+},
+{
+name:"T-shirt Kiara",
+src:"https://i.goopics.net/lfu0h6.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#ffffff", src:"https://i.goopics.net/kg6eqd.png"},
+{color:"#000000", src:"https://i.goopics.net/1bcvlo.png"},
+]
+},
+{
+name:"T-shirt Kiara large",
+src:"https://i.goopics.net/9y9nfc.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#ffffff", src:"https://i.goopics.net/9y9nfc.png"},
+{color:"#000000", src:"https://i.goopics.net/jnaymq.png"},
+]
+},
+],
+
+"bas":[
+{
+name:"Jean Leena",
+src:"https://i.goopics.net/nx8eqx.png",
+price: 200,
+description:"À porter avec les sous vêtements Leena.",
+colors:[
+{color:"#748891", src:"https://i.goopics.net/uwk62k.png"}
+]
+},
+{
+name:"Jean Jenna",
+src:"https://i.goopics.net/gtrq27.png",
+price: 200,
+colors:[
+{colorImg:"https://i.goopics.net/nsdaul.png", src:"https://i.goopics.net/gtrq27.png"},
+]
+},
+{
+name:"Jean Fayra",
+src:"https://i.goopics.net/l3ld4t.png",
+price: 200,
+colors:[
+{color:"#b4b8b9", src:"https://i.goopics.net/l3ld4t.png"},
+]
+},
+{
+name:"Cargo Jazmin",
+src:"https://i.goopics.net/9sau7s.png",
+price: 200,
+colors:[
+{color:"#6c1d33", src:"https://i.goopics.net/9sau7s.png"},
+]
+},
+{
+name:"Jean Venix",
+src:"https://i.goopics.net/etliu4.png",
+price: 200,
+colors:[
+{color:"#43536e", src:"https://i.goopics.net/etliu4.png"},
+]
+},
+{
+name:"Jupe Sola",
+src:"https://i.goopics.net/jk43ee.png",
+price: 200,
+colors:[
+{color:"#616571", src:"https://i.goopics.net/jk43ee.png"},
+]
+},
+{
+name:"Jean Taysha",
+src:"https://i.goopics.net/xls2tu.png",
+price: 200,
+colors:[
+{color:"#385b91", src:"https://i.goopics.net/xls2tu.png"},
+]
+},
+],
+
+"tenues intégrales":[
+{
+name:"Robe Shaaz",
+src:"https://i.goopics.net/rscyq1.png",
+price: 250,
+colors:[
+{color:"#000000", src:"https://i.goopics.net/rscyq1.png"},
+{color:"#ffffff", src:"https://i.goopics.net/yjavop.png"},
+]
+},
+{
+name:"Robe Alycia",
+price: 350,
+src:"https://i.goopics.net/iq8dw2.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{colorImg:"https://i.goopics.net/pow8dv.png", src:"https://i.goopics.net/iq8dw2.png"},
+{colorImg:"https://i.goopics.net/ycrwyq.png", src:"https://i.goopics.net/nxyij8.png"},
+]
+},
+],
+
+"vestes": [
+{name: "Veste Jenna", src: "https://i.goopics.net/xspllg.png",
+price: 300,},
+],
+
+"Accessoires": [
+    {name: "Lunettes de soleil Jenna", src: "https://i.goopics.net/uc0ikp.png",
+price: 50,
+description:"En accessoire 2.",
+},
+    {name: "Nokia", src: "https://i.goopics.net/u7vowm.png",
+price: 50,
+description:"En accessoire 3.",
+},
+  ],
+
+"ongles": [
+    {name: "Black", src: "https://i.goopics.net/xaywfk.png"},
+    {name: "Pink", src: "https://i.goopics.net/1x2wa6.png"}
+  ],
+
+  "bijoux": [
+    {name: "Piercing nez Leena", src: "https://i.goopics.net/877v7c.png",
+description:"Pour le nez Leena.",
+price: 50,},
+    {name: "Piercing nez Jenna", src: "https://i.goopics.net/5f8aoe.png",
+description:"Pour le nez Jenna.",
+price: 50,},
+    {name: "Collier croix dorée", src: "https://i.goopics.net/as5sqa.png",
+price: 100,},
+],
+
+
+};
+
+/* ==========================
+   DATA HOMME
+========================== */
+
+
+const maleCats = {
+/* Mets ici les catégories de la tablette */
+
+  "peau": [
+    {name: "Peau 1", src: "https://i.goopics.net/c9vwiy.png"},
+    {name: "Peau 2", src: "https://i.goopics.net/wg5183.png"},
+    {name: "Peau 3", src: "https://i.goopics.net/vdna2y.png"},
+    {name: "Peau 4", src: "https://i.goopics.net/yzguns.png"},
+    {name: "Peau 5", src: "https://i.goopics.net/x1iogg.png"},
+    {name: "Peau 6", src: "https://i.goopics.net/mps9x3.png"},
+    {name: "Peau 7", src: "https://i.goopics.net/am7p80.png"},
+    {name: "Peau 8", src: "https://i.goopics.net/a85rdk.png"},
+    {name: "Peau 9", src: "https://i.goopics.net/teryhf.png"},
+    {name: "Peau 10", src: "https://i.goopics.net/lasbqw.png"},
+    {name: "Peau 11", src: "https://i.goopics.net/lptzwy.png"},
+    {name: "Peau 12", src: "https://i.goopics.net/94q1bi.png"},
+    {name: "Peau 13", src: "https://i.goopics.net/vfpk9x.png"},
+    {name: "Peau 14", src: "https://i.goopics.net/4ttasq.png"},
+    {name: "Peau 15", src: "https://i.goopics.net/81tcn8.png"},
+    {name: "Peau 16", src: "https://i.goopics.net/wdtsud.png"},
+    {name: "Peau 17", src: "https://i.goopics.net/1xb2i9.png"},
+    {name: "Peau 18", src: "https://i.goopics.net/22ptrt.png"},
+    {name: "Peau 19", src: "https://i.goopics.net/vui6fa.png"}
+],
+
+"tatouages": [
+{
+name: "Tatouage ninja", src: "https://i.goopics.net/svud5h.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage croix", src: "https://i.goopics.net/5dj2b7.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage tête de mort", src: "https://i.goopics.net/gv6o0v.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage tête de mort bandana", src: "https://i.goopics.net/iqh9gj.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage ailes", src: "https://i.goopics.net/zhkacx.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage serpent", src: "https://i.goopics.net/fwqthe.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage rose", src: "https://i.goopics.net/qq72xf.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+{
+name: "Tatouage croix visage", src: "https://i.goopics.net/uyugyk.png",
+description:"Pour toutes demandes de tatouages, écrivez-moi un mp (à Nae Lenz).",
+price: 200,
+},
+],
+
+
+ "cicatrices": [
+    {name: "Cicatrice 1 ", src: "https://i.goopics.net/6mfu78.png"},
+    {name: "Cicatrice 2 ", src: "https://i.goopics.net/jokoeh.png"},
+],
+
+  "muscles": [
+    {name: "Abdos light skin", src: "https://i.goopics.net/dy9cmx.png"},
+    {name: "Abdos dark skin", src: "https://i.goopics.net/dxpb7c.png"},
+],
+
+  "sourcils": [
+    {name: "Sourcils Kal", src: "https://i.goopics.net/yphynw.png"},
+],
+
+"yeux":[
+{
+name:"Yeux Kal",
+src:"https://i.goopics.net/8c7jq2.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#304932", src:"https://i.goopics.net/8c7jq2.png"},
+]
+},
+{
+name:"Yeux Zane",
+src:"https://i.goopics.net/sturtc.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#304932", src:"https://i.goopics.net/sturtc.png"},
+]
+},
+],
+
+"nez":[
+{
+name:"Nez Kal",
+src:"https://i.goopics.net/kq2rmi.png",
+description:"Light ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/kq2rmi.png"},
+{color:"#000000", src:"https://i.goopics.net/jiuxml.png"},
+]
+},
+{
+name:"Nez Zane",
+src:"https://i.goopics.net/8k6mws.png",
+description:"Light ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/8k6mws.png"},
+{color:"#000000", src:"https://i.goopics.net/r8jj6u.png"},
+]
+},
+],
+
+  "bouche": [
+  {
+name: "Bouche Kal", 
+src: "https://i.goopics.net/7dc7nu.png",
+description:"Light, médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/7dc7nu.png"},
+{color:"#99613f", src:"https://i.goopics.net/qwdrle.png"},
+{color:"#000000", src:"https://i.goopics.net/ov4sn6.png"},
+]
+},
+  {
+name: "Bouche Zane", 
+src: "https://i.goopics.net/q0untz.png",
+description:"Light, médium ou dark selon votre carnation.",
+colors:[
+{color:"#A66f4b", src:"https://i.goopics.net/q0untz.png"},
+{color:"#99613f", src:"https://i.goopics.net/a7xwsp.png"},
+{color:"#000000", src:"https://i.goopics.net/50axmr.png"},
+]
+},
+],
+
+"cheveux":[
+{
+name:"Kal",
+src:"https://i.goopics.net/wqchmf.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#5c3f44", src:"https://i.goopics.net/wqchmf.png"},
+]
+},
+{
+name:"Zane",
+src:"https://i.goopics.net/ua3ar3.png",
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#805032", src:"https://i.goopics.net/ua3ar3.png"},
+]
+},
+],
+
+
+"Pilosité faciale":[
+{
+name:"Barbe 1",
+src:"https://i.goopics.net/nsxzi4.png",
+},
+{
+name:"Barbe 2",
+src:"https://i.goopics.net/i186o6.png",
+},
+],
+
+
+"bas":[
+{
+name:"Survêtement Kal",
+src:"https://i.goopics.net/9dbsm6.png",
+price: 150,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/9dbsm6.png"}
+]
+},
+{
+name:"Jean Zane",
+src:"https://i.goopics.net/rfcch9.png",
+price: 150,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#8ca2af", src:"https://i.goopics.net/rfcch9.png"}
+]
+},
+],
+
+"haut":[
+{
+name:"Pull Kal",
+src:"https://i.goopics.net/j87r9c.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#6a6750", src:"https://i.goopics.net/j87r9c.png"},
+]
+},
+],
+
+"vestes": [
+{name: "Veste Zane", src: "https://i.goopics.net/8hc6md.png",
+price: 250,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#000000", src:"https://i.goopics.net/8hc6md.png"},
+]
+},
+],
+
+"Chaussures":[
+{
+name:"Baskets NZ1",
+src:"https://i.goopics.net/rp5wot.png",
+price: 200,
+description:"Pour tout autre souhait de couleur, écrivez-moi via mp (à Nae Lenz).",
+colors:[
+{color:"#b11e17", src:"https://i.goopics.net/rp5wot.png"},
+]
+},
+],
+
+
+
+
+};
+
+let cats = femaleCats;
+
+// 🧠 PRELOAD GLOBAL DES IMAGES DE CALQUES
+function preloadCats(data){
+
+    Object.keys(data).forEach(cat => {
+
+        data[cat].forEach(item => {
+
+            if(typeof item === "object"){
+
+                // image principale
+                const img = new Image();
+                img.src = item.src;
+
+                // variantes couleurs
+                if(item.colors){
+                    item.colors.forEach(c => {
+                        const img2 = new Image();
+                        img2.src = c.src;
+                    });
+                }
+
+            } else {
+                const img = new Image();
+                img.src = item;
+            }
+
+        });
+
+    });
+}
+
+preloadCats(femaleCats);
+
+
+
+let layers = {};
+let index = {cheveux:-1, yeux:-1};
+
+const menuContent = document.getElementById("menu-content");
+
+Object.keys(cats).forEach(cat=>{
+const img = document.createElement("img");
+img.style.position="absolute";
+img.style.inset=0;
+img.style.opacity=0;
+img.style.objectFit="contain";
+
+document.getElementById("avatar-box").appendChild(img);
+layers[cat] = img;
+
+const div = document.createElement("div");
+div.className="category";
+div.innerHTML = `
+<strong>${cat}</strong>
+<button onclick="nextItem('${cat}')">Suivant</button>
+`;
+menuContent.appendChild(div);
+});
+
+/* ===================== PRODUITS ===================== */
+function nextItem(cat){
+
+index[cat]++;
+if(index[cat] >= cats[cat].length) index[cat] = 0;
+
+const item = cats[cat][index[cat]];
+
+currentCategory = cat;
+currentItem = item;
+
+layers[cat].src = item.src || item;
+layers[cat].style.opacity = 1;
+
+/* fiche produit */
+const panel = document.getElementById("product-panel");
+const name = document.getElementById("product-name");
+const desc = document.getElementById("product-desc");
+const price = document.getElementById("product-price");
+const swatch = document.getElementById("color-picker");
+
+panel.style.display = "block";
+
+if(typeof item === "object"){
+name.textContent = item.name || cat;
+desc.textContent = item.description || "";
+price.textContent = item.price ? item.price + " €" : "";
+
+swatch.innerHTML = "";
+
+if(item.colors){
+item.colors.forEach(c=>{
+const s = document.createElement("div");
+s.className="swatch";
+s.style.background = c.color;
+
+s.onclick = ()=>{
+layers[cat].src = c.src;
+selectedCartImage = c.src;
+};
+
+swatch.appendChild(s);
+});
+}
+
+}else{
+name.textContent = cat;
+desc.textContent = "";
+price.textContent = "";
+swatch.innerHTML = "";
+}
+}
+
+/* ===================== PANIER ===================== */
+document.getElementById("add-to-cart").onclick = ()=>{
+
+if(!currentItem) return;
+
+cart.push({
+    name: currentItem.name || currentCategory,
+    src: currentItem.selectedSrc || currentItem.src || currentItem,
+    color: currentItem.selectedColor || "Couleur par défaut",
+    cat: currentCategory,
+    gender: gender,
+    price: currentItem.price || 0
+});
+
+
+renderCart();
+updateCartCount();   // ← ICI
+};
+
+function renderCart(){
+
+document.getElementById("avatar-name").style.display =
+cart.length ? "block" : "none";
+
+
+const box = document.getElementById("cart-items");
+const totalBox = document.getElementById("cart-total");
+
+document.getElementById("avatar-name-box").style.display = cart.length ? "block" : "none";
+
+box.innerHTML = "";
+
+let total = 0;
+
+cart.forEach(item=>{
+
+total += Number(item.price || 0);
+
+const div = document.createElement("div");
+div.className = "cart-item";
+
+div.innerHTML = `
+<div style="display:flex;gap:15px;align-items:center;">
+
+<img src="${item.src}"
+style="
+width:70px;
+height:70px;
+object-fit:contain;
+background:transparent;
+">
+
+<div style="flex:1;">
+
+<div class="cart-name">
+${item.name}
+</div>
+
+<div class="cart-meta">
+${item.cat} • ${item.gender}
+</div>
+
+<div class="cart-price">
+${item.price}€
+</div>
+
+<button
+onclick="removeCartItem(${cart.indexOf(item)})"
+class="lux-btn"
+style="
+width:auto;
+padding:6px 12px;
+margin-top:8px;
+">
+Supprimer
+</button>
+
+</div>
+
+</div>
+`;
+
+box.appendChild(div);
+
+});
+
+totalBox.innerHTML = `
+TOTAL : ${total}€
+`;
+}
+
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1511939001530056814/KvMGih3Q7pbi-82dBPYOwXt3rbyd4N73ckFzanJjqKji8bzfb-CWuFDFdE--gQw1ssst";
+
+async function sendCartToDiscord(){
+
+    let total = 0;
+    let description = "";
+
+    cart.forEach((item,index)=>{
+
+        total += Number(item.price || 0);
+
+        description +=
+`**${index+1}. ${item.name}**
+Catégorie : ${item.cat}
+Genre : ${item.gender}
+Couleur : ${item.color}
+Prix : ${item.price}€
+
+`;
+
+    });
+
+    const avatarName = document.getElementById("avatar-name").value;
+
+    const payload = {
+
+        content:"📦 Nouvelle commande NAEDOLLZ",
+
+        embeds:[{
+
+            title:"🛒 Nouvelle commande",
+
+            color:0x4a0f14,
+
+            description:description,
+
+            fields:[
+                {
+                    name:"👤 Pol(ette)",
+                    value:avatarName,
+                    inline:false
+                },
+                {
+                    name:"💰 Total",
+                    value:total+" €",
+                    inline:true
+                },
+                {
+                    name:"📦 Articles",
+                    value:String(cart.length),
+                    inline:true
+                }
+            ]
+
+        }]
+
+    };
+
+    await fetch(DISCORD_WEBHOOK_URL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(payload)
+    });
+
+}
+
+document.getElementById("validate-cart").onclick = async ()=>{
+
+    if(cart.length===0) return;
+
+    const avatarName = document.getElementById("avatar-name").value.trim();
+
+    if(avatarName===""){
+        alert("Veuillez renseigner le nom de votre Pol(ette).");
+        return;
+    }
+
+    await sendCartToDiscord();
+
+    alert("Commande envoyée ! Veuillez adresser le paiement du total du panier à Nae Lenz. Vous recevrez vos articles prochainement, merci pour votre achat ✨");
+
+    cart = [];
+    document.getElementById("avatar-name").value = "";
+
+    renderCart();
+    updateCartCount();
+
+};
+
+
+function updateCartCount(){
+
+const badge = document.getElementById("cart-count");
+const count = cart.length;
+
+if(count > 0){
+    badge.textContent = count;
+    badge.classList.add("active");
+
+    badge.classList.remove("pop");
+    void badge.offsetWidth; // reset animation
+    badge.classList.add("pop");
+
+}else{
+    badge.textContent = "";
+    badge.classList.remove("active");
+}
+
+}
+
+
+
+
+
+function changeGender(type){
+
+const box = document.getElementById("avatar-box");
+
+/* 🎬 TA TRANSITION ORIGINALE (inchangée) */
+box.style.transition = "all .35s ease";
+box.style.opacity = "0";
+box.style.transform = "scale(0.96)";
+
+setTimeout(()=>{
+
+    gender = type;
+
+    // switch dataset
+    cats = (type === "femme") ? femaleCats : maleCats;
+
+currentItem = null;
+currentCategory = null;
+selectedCartImage = null;
+
+document.getElementById("product-name").textContent = "";
+document.getElementById("product-desc").textContent = "";
+document.getElementById("product-price").textContent = "";
+document.getElementById("color-picker").innerHTML = "";
+
+document.getElementById("product-panel").style.display = "none";
+
+    // reset UI
+    menuContent.innerHTML = "";
+    Object.keys(layers).forEach(k => layers[k].remove());
+
+    layers = {};
+    index = {};
+
+    // rebuild categories (VIDES)
+    Object.keys(cats).forEach(cat => {
+
+        index[cat] = -1; // IMPORTANT = neutre
+
+        const img = document.createElement("img");
+        img.style.position = "absolute";
+        img.style.inset = 0;
+        img.style.opacity = 0;
+        img.style.objectFit = "contain";
+
+        document.getElementById("avatar-box").appendChild(img);
+        layers[cat] = img;
+
+layers[cat] = img;
+
+// 🔥 IMPORTANT : état neutre immédiat
+layers[cat].src = "";
+layers[cat].style.opacity = 0;
+
+        const div = document.createElement("div");
+        div.className = "category";
+
+        div.innerHTML = `
+            <strong>${cat}</strong>
+            <div class="cat-controls">
+                <button onclick="prevItem('${cat}')">‹</button>
+                <button onclick="nextItem('${cat}')">›</button>
+                <button onclick="resetItem('${cat}')">⟲</button>
+            </div>
+        `;
+
+        menuContent.appendChild(div);
+    });
+
+    avatar.src = (type === "femme")
+        ? "https://i.goopics.net/yqfh46.png"
+        : "https://i.goopics.net/xo6433.png";
+
+    /* 🎬 retour transition */
+    box.style.opacity = "1";
+    box.style.transform = "scale(1)";
+
+document.getElementById("avatar-arrows").classList.remove("active");
+activeCategory = null;
+
+}, 350); // on match la durée CSS
+
+}
+
+[
+    "https://i.goopics.net/yqfh46.png",
+    "https://i.goopics.net/xo6433.png"
+].forEach(src=>{
+    const img = new Image();
+    img.src = src;
+});
+
+
+changeGender("femme");
+
+document.getElementById("reset-avatar").onclick = resetAvatar;
+
+
+function nextItem(cat, autoScroll = true){
+
+    activeCategory = cat;
+    document.getElementById("avatar-arrows").classList.add("active");
+
+    index[cat]++;
+    if(index[cat] >= cats[cat].length) index[cat] = 0;
+
+    applyItem(cat);
+
+    if(autoScroll){
+        setTimeout(()=>{
+            document.getElementById("avatar-box").scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+        },100);
+    }
+}
+
+function prevItem(cat, autoScroll = true){
+
+    activeCategory = cat;
+    document.getElementById("avatar-arrows").classList.add("active");
+
+    index[cat]--;
+    if(index[cat] < 0) index[cat] = cats[cat].length - 1;
+
+    applyItem(cat);
+
+    if(autoScroll){
+        setTimeout(()=>{
+            document.getElementById("avatar-box").scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+        },100);
+    }
+}
+
+
+function resetItem(cat){
+    index[cat] = -1;
+
+    layers[cat].src = "";
+    layers[cat].style.opacity = 0;
+
+    if(activeCategory === cat){
+        activeCategory = null;
+        document.getElementById("avatar-arrows").classList.remove("active");
+    }
+}
+
+function applyItem(cat){
+
+    const item = cats[cat][index[cat]];
+    if(!item || index[cat] < 0) return;
+
+
+// 🔥 TENUE INTÉGRALE LOGIC
+if(cat.toLowerCase().includes("tenue") || cat.toLowerCase().includes("outfit")){
+
+    Object.keys(layers).forEach(k => {
+
+        if(
+            k.toLowerCase().includes("top") ||
+            k.toLowerCase().includes("collant") ||
+            k.toLowerCase().includes("bas")
+        ){
+            layers[k].src = "";
+            layers[k].style.opacity = 0;
+            index[k] = -1;
+        }
+    });
+}
+
+
+
+
+
+    const layer = layers[cat];
+
+    activeCategory = cat;
+    document.getElementById("avatar-arrows").classList.add("active");
+
+// 1. fade out
+    layer.style.opacity = 0;
+
+    // 2. changement après transition
+    setTimeout(() => {
+
+        layer.src = item.src || item;
+
+        // force repaint propre
+        requestAnimationFrame(() => {
+            layer.style.opacity = 1;
+        });
+
+    }, 300); // 👈 synchro avec CSS (.6s mais demi-cycle suffit visuellement)
+
+    // ===== PANEL PRODUIT (remis AU BON ENDROIT) =====
+    currentCategory = cat;
+    currentItem = item;
+
+    const panel = document.getElementById("product-panel");
+    const name = document.getElementById("product-name");
+    const desc = document.getElementById("product-desc");
+    const price = document.getElementById("product-price");
+    const swatch = document.getElementById("color-picker");
+
+    panel.style.display = "block";
+
+const addBtn = document.getElementById("add-to-cart");
+
+if(noCartCategories.includes(cat)){
+    addBtn.style.display = "none";
+} else {
+    addBtn.style.display = "block";
+}
+
+
+    if(typeof item === "object"){
+        name.textContent = item.name || cat;
+        desc.textContent = item.description || "";
+        price.textContent = item.price ? item.price + " €" : "";
+        swatch.innerHTML = "";
+
+        if(item.colors){
+            item.colors.forEach(c=>{
+                const s = document.createElement("div");
+                s.className="swatch";
+if (c.colorImg) {
+    s.style.background = `url(${c.colorImg}) center/cover no-repeat`;
+} else {
+    s.style.background = c.color;
+}
+
+                s.onclick = ()=>{
+    layer.src = c.src;
+    currentItem.selectedSrc = c.src;
+currentItem.selectedColor = c.color;
+};
+
+                swatch.appendChild(s);
+            });
+        }
+    } else {
+        name.textContent = cat;
+        desc.textContent = "";
+        price.textContent = "";
+        swatch.innerHTML = "";
+    }
+}
+
+
+function avatarNext(){
+    if(!activeCategory) return;
+    nextItem(activeCategory, false);
+}
+
+function avatarPrev(){
+    if(!activeCategory) return;
+    prevItem(activeCategory, false);
+}
+
+
+function resetAvatar(){
+
+    Object.keys(layers).forEach(cat=>{
+        layers[cat].src = "";
+        layers[cat].style.opacity = 0;
+        index[cat] = -1;
+    });
+
+    activeCategory = null;
+    currentItem = null;
+    currentCategory = null;
+    selectedCartImage = null;
+
+    document.getElementById("avatar-arrows").classList.remove("active");
+
+    document.getElementById("product-name").textContent = "";
+    document.getElementById("product-desc").textContent = "";
+    document.getElementById("product-price").textContent = "";
+    document.getElementById("color-picker").innerHTML = "";
+}
+
+
+function removeCartItem(i){
+    cart.splice(i,1);
+    renderCart();
+    updateCartCount();
+}
+
+renderCart();
+
+
+</script>
+
+</body>
+</html>
